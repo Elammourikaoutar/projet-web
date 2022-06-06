@@ -1,35 +1,58 @@
 var express = require('express');
-var router = express.Router();
-const commentsRepo = require('../prisma/comment');
+var commentaireRouter = express.Router();
+const client = require('../prisma/client');
 
-
-router.get('/:id', async function (req, res, next) {
-  res.send(await commentsRepo.getComment(req.params.id))
-})
-
-router.post('/', async function (req, res, next) {
-  const comment = req.body;
-
-  const getedcomment = await commentsRepo.getArticle(comment.id);
-  if (!getedcomment) {
-    res.send(await commentsRepo.addComment(id))
-  }
+commentaireRouter.get("/", async (req, res) => {
+  const commentaires = await client.Commentaire.findMany();
+  res.json({ commentaires });
 });
 
-router.put('/', async function (req, res, next) {
-  const comment = req.body;
-  const getedcomment = await commentsRepo.addComment(comment.id);
-  if (!getedcomment) {
-    res.send(await commentsRepo.updateComment(comment))
-  }
+commentaireRouter.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const commentaire = await client.Commentaire.findFirst({ where: { id: +id } });
+  res.json({ commentaire });
 });
 
-router.delete('/:id', async function (req, res, next) {
-  const comment = req.body;
-  const getedcomment = await commentsRepo.getComment(comment.id);
-  if (!getedcomment) {
-    res.send(await getedcomment.deleteComment(id))
-  }
+commentaireRouter.post("/", async (req, res) => {
+  const { email, contenu, articleId } = req.body;
+  const commentaire = await client.Commentaire.create({
+    data: {
+      email, contenu, articleId
+    },
+  });
+
+  res.json({ commentaire });
 });
 
-module.exports = router;
+commentaireRouter.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const commentaire = await client.Commentaire.findFirst({
+    where: { id: parseInt(id) },
+  });
+  if (commentaire) {
+    await client.Commentaire.delete({ where: { id: parseInt(id) } });
+    res.json({ message: "Commentaire deleted" });
+    return;
+  }
+  res.json({ message: "Commentaire not found" });
+});
+
+commentaireRouter.patch("/", async (req, res) => {
+  const { id, email, contenu, articleId } = req.body;
+
+  const commentaire = await client.Commentaire.findFirst({
+    where: { id: parseInt(id) },
+  });
+
+  if (Commentaire) {
+    const commentaire = await client.Commentaire.update({
+      where: { id: parseInt(id) }, data: { email, contenu, articleId },
+    });
+    res.json({ commentaire });
+    return;
+  }
+  res.json({ message: "Commentaire not found" });
+});
+
+module.exports = commentaireRouter;
