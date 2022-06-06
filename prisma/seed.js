@@ -1,8 +1,6 @@
 const client = require("./client");
 const { faker } = require("@faker-js/faker")
 
-
-
 const generateUsers = (count) => {
     var id = 1;
     var users = new Array(count);
@@ -11,7 +9,6 @@ const generateUsers = (count) => {
     }
     return users
 }
-
 
 const generateArticles = (count, userMax) => {
     var id = 1;
