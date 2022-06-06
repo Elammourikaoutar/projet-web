@@ -1,0 +1,30 @@
+body {
+    background-color: yellow;
+    
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    
+  }
+  
+  a {
+    color: #fffb00;
+  }
+  
+  h2 {
+    color: rgb(255, 255, 255);
+    text-align: center;
+  }
+  
+  h5 {
+    color: rgb(0, 0, 0);
+    text-align: center;
+   
+  }
+  
+  #addBtn {
+    text-align: center; 
+  }
+  
+  #updateBtn {
+    text-align: center; 
+  }
