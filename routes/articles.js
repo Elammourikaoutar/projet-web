@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const articlesRepo = require('../repositories/articles');
+const articlesRepo = require('../prisma/article');
 
 router.get('/', async function (req, res, next) {
     const page = parseInt(req.query.page) || 1;

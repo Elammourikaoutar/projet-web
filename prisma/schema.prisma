@@ -13,7 +13,7 @@ generator client {
 //}
 //generator comment {
 //provider = "prisma-comment-js"
-//}
+//n}
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
